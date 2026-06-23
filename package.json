@@ -1,0 +1,44 @@
+{
+  "name": "n8n-nodes-talordata-serp",
+  "version": "0.1.0",
+  "description": "n8n community node for Talordata SERP API.",
+  "license": "MIT",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "serp",
+    "talordata"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "generate": "node scripts/generate-from-dify-serp.js",
+    "build": "tsc && node scripts/copy-assets.js",
+    "test": "jest --runInBand",
+    "lint": "node scripts/validate-package.js",
+    "prepack": "npm run build && npm run lint && npm test"
+  },
+  "files": [
+    "dist",
+    "credentials",
+    "README.md"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/TalordataSerpApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/TalordataSerp/TalordataSerp.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.19.0",
+    "jest": "^29.7.0",
+    "n8n-node-dev": "^1.121.16",
+    "n8n-workflow": "^1.82.0",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.8.3",
+    "yaml": "^2.9.0"
+  }
+}
