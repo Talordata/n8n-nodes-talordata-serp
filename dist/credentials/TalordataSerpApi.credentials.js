@@ -41,7 +41,8 @@ class TalordataSerpApi {
                 url: '={{$credentials.endpoint}}',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
-                    Accept: 'application/json'
+                    Accept: 'application/json',
+                    Origin: 'n8n'
                 },
                 body: 'engine=google&q=coffee&json=2'
             }

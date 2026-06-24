@@ -1,8 +1,17 @@
 {
   "name": "n8n-nodes-talordata-serp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "n8n community node for Talordata SERP API.",
   "license": "MIT",
+  "author": "Talordata",
+  "homepage": "https://github.com/Talordata/n8n-nodes-talordata-serp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Talordata/n8n-nodes-talordata-serp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Talordata/n8n-nodes-talordata-serp/issues"
+  },
   "keywords": [
     "n8n-community-node-package",
     "n8n",
@@ -19,7 +28,7 @@
   },
   "files": [
     "dist",
-    "credentials",
+    "LICENSE",
     "README.md"
   ],
   "n8n": {

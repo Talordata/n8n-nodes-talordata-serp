@@ -20,12 +20,24 @@ function exists(relativePath) {
 const pkg = readJson('package.json')
 
 assert(pkg.name === 'n8n-nodes-talordata-serp', 'package name must be n8n-nodes-talordata-serp')
+assert(/^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$/.test(pkg.version), 'package version must be valid semver')
+assert(pkg.description && /Talordata SERP/i.test(pkg.description), 'package must describe the Talordata SERP node')
+assert(pkg.license === 'MIT', 'package license must be MIT')
+assert(pkg.author === 'Talordata', 'package author must be Talordata')
+assert(pkg.homepage === 'https://github.com/Talordata/n8n-nodes-talordata-serp#readme', 'package homepage must point to the GitHub README')
+assert(pkg.repository && pkg.repository.type === 'git', 'package repository must be a git repository object')
+assert(pkg.repository.url === 'git+https://github.com/Talordata/n8n-nodes-talordata-serp.git', 'package repository must point to the Talordata GitHub repository')
+assert(pkg.bugs && pkg.bugs.url === 'https://github.com/Talordata/n8n-nodes-talordata-serp/issues', 'package bugs URL must point to GitHub Issues')
 assert(pkg.main === 'dist/index.js', 'package main must point to dist/index.js')
 assert(exists(pkg.main), `missing package main: ${pkg.main}`)
 assert(Array.isArray(pkg.keywords) && pkg.keywords.includes('n8n-community-node-package'), 'missing n8n community node keyword')
 assert(pkg.n8n && pkg.n8n.n8nNodesApiVersion === 1, 'missing n8n metadata')
 assert(Array.isArray(pkg.files) && pkg.files.includes('dist'), 'package files must include dist')
+assert(pkg.files.includes('README.md'), 'package files must include README.md')
+assert(pkg.files.includes('LICENSE'), 'package files must include LICENSE')
+assert(!pkg.dependencies || Object.keys(pkg.dependencies).length === 0, 'package must not add runtime dependencies')
 assert(!pkg.files.includes('nodes'), 'package files should not publish TypeScript source nodes')
+assert(!pkg.files.includes('credentials'), 'package files should not publish TypeScript source credentials')
 
 for (const credentialPath of pkg.n8n.credentials || []) {
   assert(exists(credentialPath), `missing compiled credential: ${credentialPath}`)
@@ -42,7 +54,9 @@ const requiredSources = [
   'nodes/TalordataSerp/request.ts',
   'nodes/TalordataSerp/response.ts',
   'nodes/TalordataSerp/icon.png',
+  'nodes/TalordataSerp/TalordataSerp.node.json',
   'scripts/generate-from-dify-serp.js',
+  'LICENSE',
   'README.md'
 ]
 
@@ -53,12 +67,24 @@ for (const sourcePath of requiredSources) {
 const credentialSource = fs.readFileSync(path.join(root, 'credentials/TalordataSerpApi.credentials.ts'), 'utf8')
 assert(credentialSource.includes('https://serpapi.talordata.net/serp/v1/request'), 'credential must default to public SERP endpoint')
 assert(credentialSource.includes('Authorization: \'=Bearer {{$credentials.apiKey}}\''), 'credential must authenticate with Bearer API key')
+assert(credentialSource.includes("Origin: 'n8n'"), 'credential test request must include Origin: n8n')
 
 const nodeSource = fs.readFileSync(path.join(root, 'nodes/TalordataSerp/TalordataSerp.node.ts'), 'utf8')
 assert(nodeSource.includes("icon: 'file:icon.png'"), 'node must use the PNG icon')
 assert(nodeSource.includes("Origin: 'n8n'") || fs.readFileSync(path.join(root, 'nodes/TalordataSerp/request.ts'), 'utf8').includes("Origin: 'n8n'"), 'SERP requests must include Origin: n8n')
 assert(exists('dist/nodes/TalordataSerp/icon.png'), 'missing compiled node icon: dist/nodes/TalordataSerp/icon.png')
+assert(exists('dist/nodes/TalordataSerp/TalordataSerp.node.json'), 'missing compiled node codex file: dist/nodes/TalordataSerp/TalordataSerp.node.json')
 assert(exists('dist/nodes/TalordataSerp/generated/serp-actions.js'), 'missing compiled generated actions')
+
+const codex = readJson('nodes/TalordataSerp/TalordataSerp.node.json')
+assert(codex.node === 'n8n-nodes-talordata-serp.talordataSerp', 'codex node must match package and node name')
+assert(codex.codexVersion === '1.0', 'codex version must be 1.0')
+assert(Array.isArray(codex.categories) && codex.categories.includes('Data & Storage'), 'codex categories must include Data & Storage')
+assert(codex.resources && Array.isArray(codex.resources.primaryDocumentation), 'codex must include primary documentation')
+assert(
+  codex.resources.primaryDocumentation.some((resource) => resource.url === 'https://github.com/Talordata/n8n-nodes-talordata-serp#readme'),
+  'codex primary documentation must point to the GitHub README'
+)
 
 const generatedSource = fs.readFileSync(path.join(root, 'nodes/TalordataSerp/generated/serp-actions.ts'), 'utf8')
 assert(generatedSource.includes('google_lens_search'), 'generated actions must include google_lens_search')

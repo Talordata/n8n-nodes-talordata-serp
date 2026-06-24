@@ -12,5 +12,10 @@ describe('TalordataSerpApi credential', () => {
     expect(credential.authenticate.properties.headers).toEqual({
       Authorization: '=Bearer {{$credentials.apiKey}}'
     })
+    expect(credential.test.request.headers).toEqual({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Accept: 'application/json',
+      Origin: 'n8n'
+    })
   })
 })

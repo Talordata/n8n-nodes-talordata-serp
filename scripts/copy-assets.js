@@ -7,6 +7,10 @@ const assets = [
   {
     source: path.join(root, 'nodes', 'TalordataSerp', 'icon.png'),
     target: path.join(root, 'dist', 'nodes', 'TalordataSerp', 'icon.png')
+  },
+  {
+    source: path.join(root, 'nodes', 'TalordataSerp', 'TalordataSerp.node.json'),
+    target: path.join(root, 'dist', 'nodes', 'TalordataSerp', 'TalordataSerp.node.json')
   }
 ]
 
