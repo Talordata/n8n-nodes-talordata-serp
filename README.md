@@ -1,55 +1,106 @@
-# n8n-nodes-talordata-serp
+# n8n readme
 
-Talordata SERP community node for n8n.
+# n8n integration for TalorData SERP API
 
-This package adds a `Talordata SERP API` credential and a `Talordata SERP` node that calls the Talordata SERP API from n8n workflows.
+You can integrate [**TalorData**](https://www.talordata.com/serp-api/n8n?campaignid=YAnR3igdXFZH5Bj7&utm_source=n8n&utm_term=n8n) into n8n using the `n8n-nodes-talordata-serp` community node. Once configured, you can send search requests directly from your n8n workflows and retrieve structured results from Google, Bing, DuckDuckGo, and Yandex.
 
-```text
-POST https://serpapi.talordata.net/serp/v1/request
-Content-Type: application/x-www-form-urlencoded
-Authorization: Bearer <SERP_API_KEY>
-Origin: n8n
+### Overview
+
+n8n is a workflow automation platform that allows you to visually connect applications, APIs, and AI agents. TalorData provides SERP API capabilities suitable for real-time search result retrieval, localized search analysis, SEO monitoring, market research, and agent-driven web data workflows.
+
+**With the TalorData n8n integration, you can:**
+
+Execute SERP searches on Google, Bing, DuckDuckGo, Yandex, and more directly within n8n.
+
+Utilize localized search parameters such as country/region, language, device, and market.
+
+Integrate search results into workflows involving AI agents, reporting pipelines, alerts, data enrichment, and more.
+
+Pass advanced SERP parameters via raw request mode for scenarios requiring greater control.
+
+To learn more about TalorData SERP API features, pricing, or how to get an API key for your n8n credentials, visit TalorData.
+
+### Preparations
+
+Before you begin, please ensure you have:
+
+*   A working n8n instance.
+    
+*   Permissions for installing n8n community nodes.
+    
+
+### A [**TalorData SERP API key**](https://www.talordata.com/serp-api/n8n?campaignid=YAnR3igdXFZH5Bj7&utm_source=n8n&utm_term=n8n) starting with `sk_`.
+
+### Specific steps
+
+#### Installation
+
+Install the TalorData node from the n8n Community Nodes panel:
+
+*   Open your n8n instance.
+    
+*   Go to `Settings` > `Community Nodes`。
+    
+*   Click `Install`。
+    
+*   Enter package name:
+    
+
+```plaintext
+n8n-nodes-talordata-serp
 ```
 
-Use a Talordata SERP API Key beginning with `sk_`. Do not use a Talordata dashboard login JWT.
+*   Confirm installation.
+    
+*   If your deployment environment requires a restart, please restart n8n.
+    
 
-## Installation
+**After installation, n8n will add:**
 
-Install the package from the n8n Community Nodes panel:
+*   A credential type named Talordata SERP API.
+    
+*   A workflow node named Talordata SERP.
+    
 
-1. Open n8n.
-2. Go to `Settings` > `Community Nodes`.
-3. Select `Install`.
-4. Enter `n8n-nodes-talordata-serp`.
-5. Confirm the installation and restart n8n if your deployment requires it.
+#### Configure Credentials
 
-This package is a community node. It appears in n8n's regular Community Nodes installation flow after publishing to npm. It should only be described as an n8n verified node after n8n has approved it.
+Before adding nodes to the production workflow, it is recommended to create TalorData credentials:
 
-## Credentials
+*   Open Credentials in n8n.
+    
+*   Create new credentials and select Talordata SERP API.
+    
+*   Paste your TalorData SERP API Key.
+    
+*   Unless you are testing an internal development environment, keep the default endpoint.
+    
+*   Save or test the credential.
+    
 
-1. Create a `Talordata SERP API` credential.
-2. Paste a Talordata SERP API Key beginning with `sk_`.
-3. Keep the default endpoint unless you are testing an internal development environment.
-4. Save or test the credential.
+#### Create Your First Workflow
 
-The credential test request and workflow execution requests both send `Origin: n8n` for Talordata platform statistics.
+Run a TalorData search in n8n:
 
-## Using the Node
+*   Create a new workflow or open an existing one.
+    
+*   Add the Talordata SERP node.
+    
+*   Select your Talordata SERP API credentials.
+    
+*   Select an operation, such as Google Search.
+    
+*   Fill in the fields displayed for the operation.
+    
+*   Execute the node.
+    
 
-1. Create or open a workflow.
-2. Add the `Talordata SERP` node.
-3. Select the `Talordata SERP API` credential.
-4. Choose an `Operation`.
-5. Fill in the fields shown for that operation.
-6. Execute the node.
+The node returns the TalorData SERP JSON response along with request metadata for the selected operation. You can pass the output to downstream n8n nodes, such as AI Agents, Code nodes, databases, spreadsheets, notification services, or reporting tools.
 
-The node returns the Talordata SERP JSON response plus request metadata for the selected operation.
+### Example: Google Search
 
-## Examples
+You can use this action when you need to retrieve standard web search results from Google.
 
-Google Search:
-
-```text
+```plaintext
 Operation: Google Search
 Search Query: coffee
 Country/Region: United States
@@ -57,9 +108,13 @@ Language: English
 Number of results: 10
 ```
 
-Bing Image Search:
+Typical use cases include market research, SEO monitoring, competitor analysis, and retrieval-augmented AI workflows.
 
-```text
+### Example: Bing Image Search
+
+This action can be used when the workflow needs to retrieve image search results from Bing.
+
+```plaintext
 Operation: Bing Image Search
 Search Query: coffee
 Country/Region: United States
@@ -67,91 +122,117 @@ Market: en-US
 Result count: 10
 ```
 
-Google Lens Search:
+### Example: Google Lens Search
 
-```text
+Google Lens Search can be used when the workflow takes an image URL as input.
+
+```plaintext
 Operation: Google Lens Search
 Image URL: https://example.com/image.png
 ```
 
-Yandex Search:
+### Example: Yandex Search
 
-```text
+Yandex Search can be used when a workflow requires Yandex SERP results.
+
+```plaintext
 Operation: Yandex Search
 Search Query: coffee
 ```
 
-Raw SERP Request:
+### Advanced Usage: Raw SERP Request
 
-```text
+You can use a Raw SERP Request when you want to select a pre-generated SERP action while manually passing advanced parameters.
+
+```plaintext
 Operation: Raw SERP Request
 Raw Action: Google Lens Search
 Raw Query: https://example.com/image.png
 Extra Parameters JSON: {"hl":"en"}
 ```
 
-Use `Raw SERP Request` when you want to choose a generated action but provide advanced parameters manually. The node uses the correct query field for the selected action, for example `q`, `text`, `url`, `product_id`, `patent_id`, `author_id`, or `trend`.
+The node automatically uses the correct query field based on the selected action—such as `q`、`text`、`url`、`product_id`、`patent_id`、`author_id` or `trend`。
 
-## Supported Operations
+The Extra Parameters JSONmust be a valid JSON object. This field is merged into the request after the visible form fields. The node controls the `engine` and the default `json=2` value, so extra parameters cannot override the selected search engine.
 
-The node exposes Talordata SERP actions generated from the same metadata used by the Talordata Dify plugin. The operation dropdown includes Google, Bing, DuckDuckGo, Yandex, Google Images, Bing Images, Google News, Bing News, Google Lens, Google Shopping, Google Scholar, Google Play, Google Patents, Google Finance, Google Hotels, Google Flights, Google Maps, Google Trends, and other generated SERP actions.
+### Supported operations
 
-Each explicit operation shows only the parameters defined for that action. The `Extra Parameters JSON` field is available for advanced parameters and is merged into the request after visible form fields. The node controls `engine` and default `json=2`; extra parameters cannot override the selected engine.
+Talordata SERP nodes expose SERP actions generated from TalorData metadata. The list of actions includes:
 
-## Troubleshooting
+Each explicit action displays only the parameters it supports. To pass advanced parameters not shown in the form, use the Extra Parameters JSON field.
 
-401 or 403:
+### Troubleshooting
 
-- Confirm the API Key begins with `sk_`.
-- Confirm the credential uses the `Talordata SERP API` credential type.
-- Generate a fresh API Key in Talordata if the key is expired or disabled.
+#### 401 or 403 error
 
-400:
+Please check:
 
-- Confirm the selected operation has a non-empty query.
-- For `Raw SERP Request`, confirm `Extra Parameters JSON` is a JSON object.
+*   Does the API key start with sk\_?
+    
+*   Is the credential type Talordata SERP API?
+    
+*   Has the API key expired or been disabled?
+    
 
-429:
+> If necessary, please generate a new SERP API Key in TalorData and update the n8n credentials.
 
-- Reduce n8n concurrency.
-- Add batching between workflow items.
-- Check Talordata quota and rate limits.
+#### 400 error
 
-Network or regional access errors:
+Please check:
 
-- Confirm the n8n runtime can reach `https://serpapi.talordata.net`.
-- If your deployment requires an outbound proxy, configure the proxy at the n8n runtime level.
+*   Whether the required query or URL fields have been filled in for the selected operation.
+    
+*   Whether the Extra Parameters JSON is valid JSON.
+    
+*   Whether the parameters match the selected SERP operation.
+    
+
+#### 429 error
+
+If the workflow triggers rate limiting, you can try:
+
+*   Reduce n8n workflow concurrency.
+    
+*   Add batching or delay nodes between requests.
+    
+*   Check your TalorData quotas and rate limits.
+    
+
+#### Network error
+
+If n8n cannot access TalorData, please check:
+
+*   Check if the n8n runtime environment can access https://serpapi.talordata.net.
+    
+*   If your environment requires an outbound proxy, configure the proxy at the n8n runtime environment level.
+    
+*   Check for firewall, DNS, or regional network restrictions in the deployment environment.
+    
+
+## Resources
+
+*   npm: [n8n-talordata](https://www.npmjs.com/package/n8n-nodes-talordata-serp)
+    
+*   TalorData: [talordata.com](https://www.talordata.com/serp-api/n8n?campaignid=YAnR3igdXFZH5Bj7&utm_source=n8n&utm_term=n8n)
+    
 
 ## Support
 
-For issues with this n8n community node, use GitHub Issues:
+For issues with the n8n integration package, report an issue in the [GitHub repository](https://github.com/talordata).
 
-https://github.com/Talordata/n8n-nodes-talordata-serp/issues
+For TalorData SERP API account, quota, or API key issues, contact TalorData support through the support channel listed in your TalorData account or dashboard.
 
-For Talordata SERP API access, quota, or billing questions, use your Talordata support channel.
+For detailed integration tutorials and API documentation, visit the TalorData Documentation.
 
-## Development
+---
 
-```powershell
-npm install
-npm run build
-npm run lint
-npm test
-```
+## Learn More
 
-Build a local package for private/self-hosted testing:
+Ready to build AI agents with real-time search in n8n?
 
-```powershell
-npm pack
-```
+**Explore the** [**TalorData n8n Integration Guide**](https://www.talordata.com/serp-api/n8n?campaignid=YAnR3igdXFZH5Bj7&utm_source=n8n&utm_term=n8n)
 
-Before publishing a public npm release, run:
+**Read the** [**Integration Documentation**](https://docs.talordata.com/serp-api/integration/sdk-integration/how-to-integrate-talordata-with-n8n)
 
-```powershell
-npm run build
-npm run lint
-npm test
-npm pack --dry-run
-```
-
-Publish public releases from GitHub Actions with npm provenance enabled. The repository includes `.github/workflows/publish.yml` for npm Trusted Publisher based releases.
+---
+> **TalorData brings real-time search to n8n, enabling developers to build AI agents and workflows with fresh, structured, and reliable search data.**
