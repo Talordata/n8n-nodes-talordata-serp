@@ -233,4 +233,4 @@ Ready to build AI agents with real-time search in n8n?
 **Read the** [**Integration Documentation**](https://docs.talordata.com/serp-api/integration/sdk-integration/how-to-integrate-talordata-with-n8n)
 
 ---
-> **TalorData brings real-time search to n8n, enabling developers to build AI agents and workflows with fresh, structured, and reliable search data.**
+> **TalorData brings real‑time search to n8n, enabling developers to build AI agents and workflows with fresh, structured, and reliable search data.**
