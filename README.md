@@ -26,8 +26,7 @@ Before you begin, please ensure you have:
     
 *   Permissions for installing n8n community nodes.
     
-
-### A [**TalorData SERP API key**](https://www.talordata.com/serp-api/n8n?campaignid=YAnR3igdXFZH5Bj7&utm_source=n8n&utm_term=n8n) starting with `sk_`.
+* A [**TalorData SERP API key**](https://www.talordata.com/serp-api/n8n?campaignid=YAnR3igdXFZH5Bj7&utm_source=n8n&utm_term=n8n) starting with `sk_`.
 
 ### Specific steps
 
