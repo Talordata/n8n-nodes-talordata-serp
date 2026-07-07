@@ -1,5 +1,3 @@
-# n8n readme
-
 # n8n integration for TalorData SERP API
 
 You can integrate [**TalorData**](https://www.talordata.com/serp-api/n8n?campaignid=YAnR3igdXFZH5Bj7&utm_source=n8n&utm_term=n8n) into n8n using the `n8n-nodes-talordata-serp` community node. Once configured, you can send search requests directly from your n8n workflows and retrieve structured results from Google, Bing, DuckDuckGo, and Yandex.
