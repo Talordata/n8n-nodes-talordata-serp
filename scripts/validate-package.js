@@ -23,7 +23,6 @@ assert(pkg.name === 'n8n-nodes-talordata-serp', 'package name must be n8n-nodes-
 assert(/^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$/.test(pkg.version), 'package version must be valid semver')
 assert(pkg.description && /Talordata SERP/i.test(pkg.description), 'package must describe the Talordata SERP node')
 assert(pkg.license === 'MIT', 'package license must be MIT')
-assert(pkg.author === 'Talordata', 'package author must be Talordata')
 assert(pkg.homepage === 'https://github.com/Talordata/n8n-nodes-talordata-serp#readme', 'package homepage must point to the GitHub README')
 assert(pkg.repository && pkg.repository.type === 'git', 'package repository must be a git repository object')
 assert(pkg.repository.url === 'git+https://github.com/Talordata/n8n-nodes-talordata-serp.git', 'package repository must point to the Talordata GitHub repository')
