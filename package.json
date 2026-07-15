@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-talordata-serp",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "n8n community node for Talordata SERP API.",
   "license": "MIT",
   "author": {
@@ -24,7 +24,7 @@
   "main": "dist/index.js",
   "scripts": {
     "generate": "node scripts/generate-from-dify-serp.js",
-    "build": "tsc && node scripts/copy-assets.js",
+    "build": "node scripts/clean-dist.js && tsc && node scripts/copy-assets.js",
     "test": "jest --runInBand",
     "lint": "node scripts/validate-package.js",
     "prepack": "npm run build && npm run lint && npm test"

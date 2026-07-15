@@ -17,6 +17,21 @@ function exists(relativePath) {
   return fs.existsSync(path.join(root, relativePath))
 }
 
+function listFiles(directory) {
+  const absoluteDirectory = path.join(root, directory)
+  const entries = fs.readdirSync(absoluteDirectory, { withFileTypes: true })
+
+  return entries.flatMap((entry) => {
+    const relativePath = path.join(directory, entry.name)
+
+    if (entry.isDirectory()) {
+      return listFiles(relativePath)
+    }
+
+    return relativePath
+  })
+}
+
 const pkg = readJson('package.json')
 
 assert(pkg.name === 'n8n-nodes-talordata-serp', 'package name must be n8n-nodes-talordata-serp')
@@ -74,6 +89,10 @@ assert(nodeSource.includes("Origin: 'n8n'") || fs.readFileSync(path.join(root, '
 assert(exists('dist/nodes/TalordataSerp/icon.png'), 'missing compiled node icon: dist/nodes/TalordataSerp/icon.png')
 assert(exists('dist/nodes/TalordataSerp/TalordataSerp.node.json'), 'missing compiled node codex file: dist/nodes/TalordataSerp/TalordataSerp.node.json')
 assert(exists('dist/nodes/TalordataSerp/generated/serp-actions.js'), 'missing compiled generated actions')
+assert(
+  listFiles('dist').every((filePath) => !filePath.endsWith('.d.ts')),
+  'dist must not publish TypeScript declaration files because the n8n community scanner lints them as source files'
+)
 
 const codex = readJson('nodes/TalordataSerp/TalordataSerp.node.json')
 assert(codex.node === 'n8n-nodes-talordata-serp.talordataSerp', 'codex node must match package and node name')
