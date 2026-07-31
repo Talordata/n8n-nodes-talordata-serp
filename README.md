@@ -97,11 +97,15 @@ The node returns the TalorData SERP JSON response along with request 
 
 You can use this action when you need to retrieve standard web search results from Google.
 
+Starting with version `0.1.9`, **Country Set** and **Language Restriction** are optional multi-select fields. Both default to no selection, so they add no restriction unless the user chooses one or more values.
+
 ```plaintext
 Operation: Google Search
 Search Query: coffee
 Country/Region: United States
 Language: English
+Country Set (optional): United States, Canada
+Language Restriction (optional): English, French
 Number of results: 10
 ```
 

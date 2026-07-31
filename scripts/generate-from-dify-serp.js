@@ -83,7 +83,9 @@ function generatedParameter(action, parameter) {
   const key = String(parameter.name || '')
   assert(key, `${action.toolName} has a parameter without name`)
 
-  const n8nType = TYPE_MAP[String(parameter.type || 'string')] || 'string'
+  const sourceType = TYPE_MAP[String(parameter.type || 'string')] || 'string'
+  const isGoogleMultiSelect = action.toolName === 'google_search' && ['cr', 'lr'].includes(key)
+  const n8nType = isGoogleMultiSelect ? 'multiOptions' : sourceType
   const hasDefault = Object.prototype.hasOwnProperty.call(parameter, 'default')
   const property = {
     displayName: textFromLabel(parameter.label, key.replace(/_/g, ' ')),
@@ -103,6 +105,8 @@ function generatedParameter(action, parameter) {
     property.default = false
   } else if (n8nType === 'number') {
     property.default = null
+  } else if (n8nType === 'multiOptions') {
+    property.default = []
   } else if (n8nType !== 'number') {
     property.default = ''
   }
@@ -112,7 +116,11 @@ function generatedParameter(action, parameter) {
     property.description = description
   }
 
-  if (n8nType === 'options') {
+  if (isGoogleMultiSelect) {
+    property.description = `Select zero or more ${property.displayName} values.`
+  }
+
+  if (n8nType === 'options' || n8nType === 'multiOptions') {
     property.options = Array.isArray(parameter.options)
       ? parameter.options.map((option) => ({
         name: optionName(option),
@@ -139,7 +147,7 @@ function generatedParameter(action, parameter) {
     metadata: {
       key,
       propertyName: property.name,
-      type: property.type === 'options' ? 'options' : property.type,
+      type: property.type,
       required: Boolean(parameter.required)
     }
   }
@@ -206,7 +214,7 @@ function writeGeneratedFile() {
 export interface GeneratedSerpParameter {
   key: string
   propertyName: string
-  type: 'string' | 'number' | 'boolean' | 'options' | 'json'
+  type: 'string' | 'number' | 'boolean' | 'options' | 'multiOptions' | 'json'
   required: boolean
 }
 

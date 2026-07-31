@@ -36,6 +36,7 @@ const pkg = readJson('package.json')
 
 assert(pkg.name === 'n8n-nodes-talordata-serp', 'package name must be n8n-nodes-talordata-serp')
 assert(/^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$/.test(pkg.version), 'package version must be valid semver')
+assert(pkg.version === '0.1.9', 'unpublished package version must remain 0.1.9')
 assert(pkg.description && /Talordata SERP/i.test(pkg.description), 'package must describe the Talordata SERP node')
 assert(pkg.license === 'MIT', 'package license must be MIT')
 assert(pkg.homepage === 'https://github.com/Talordata/n8n-nodes-talordata-serp#readme', 'package homepage must point to the GitHub README')
@@ -46,6 +47,10 @@ assert(pkg.main === 'dist/index.js', 'package main must point to dist/index.js')
 assert(exists(pkg.main), `missing package main: ${pkg.main}`)
 assert(Array.isArray(pkg.keywords) && pkg.keywords.includes('n8n-community-node-package'), 'missing n8n community node keyword')
 assert(pkg.n8n && pkg.n8n.n8nNodesApiVersion === 1, 'missing n8n metadata')
+assert(
+  JSON.stringify(pkg.n8n.nodes) === JSON.stringify(['dist/nodes/TalordataSerp/TalordataSerp.node.js']),
+  'package must register only the TalorData SERP node'
+)
 assert(Array.isArray(pkg.files) && pkg.files.includes('dist'), 'package files must include dist')
 assert(pkg.files.includes('README.md'), 'package files must include README.md')
 assert(pkg.files.includes('LICENSE'), 'package files must include LICENSE')
@@ -89,6 +94,10 @@ assert(nodeSource.includes("Origin: 'n8n'") || fs.readFileSync(path.join(root, '
 assert(exists('dist/nodes/TalordataSerp/icon.png'), 'missing compiled node icon: dist/nodes/TalordataSerp/icon.png')
 assert(exists('dist/nodes/TalordataSerp/TalordataSerp.node.json'), 'missing compiled node codex file: dist/nodes/TalordataSerp/TalordataSerp.node.json')
 assert(exists('dist/nodes/TalordataSerp/generated/serp-actions.js'), 'missing compiled generated actions')
+assert(
+  !exists('nodes/TalordataSeoSheetWriter') && !exists('dist/nodes/TalordataSeoSheetWriter'),
+  'package must not contain the removed Google Sheets writer'
+)
 assert(
   listFiles('dist').every((filePath) => !filePath.endsWith('.d.ts')),
   'dist must not publish TypeScript declaration files because the n8n community scanner lints them as source files'

@@ -154,7 +154,8 @@ function buildParamsForOperation(this: IExecuteFunctions, operation: string, ite
 
   const values: Record<string, unknown> = {}
   for (const parameter of action.parameters) {
-    values[parameter.propertyName] = this.getNodeParameter(parameter.propertyName, itemIndex, '')
+    const fallback = parameter.type === 'multiOptions' ? [] : ''
+    values[parameter.propertyName] = this.getNodeParameter(parameter.propertyName, itemIndex, fallback)
   }
 
   return buildGeneratedActionParams({

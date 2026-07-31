@@ -99,6 +99,31 @@ describe('generated SERP actions', () => {
     )
   })
 
+  it('exposes optional Google country and language restrictions as empty multi-selects', () => {
+    const googleSearch = SERP_ACTIONS_BY_TOOL_NAME.google_search
+    const countryMetadata = googleSearch.parameters.find((parameter) => parameter.key === 'cr')
+    const languageMetadata = googleSearch.parameters.find((parameter) => parameter.key === 'lr')
+    const countryProperty = SERP_ACTION_PROPERTIES.find(
+      (property) => property.name === 'google_search__cr'
+    )
+    const languageProperty = SERP_ACTION_PROPERTIES.find(
+      (property) => property.name === 'google_search__lr'
+    )
+
+    expect(countryMetadata?.type).toBe('multiOptions')
+    expect(languageMetadata?.type).toBe('multiOptions')
+    expect(countryProperty).toMatchObject({
+      type: 'multiOptions',
+      default: [],
+      required: false
+    })
+    expect(languageProperty).toMatchObject({
+      type: 'multiOptions',
+      default: [],
+      required: false
+    })
+  })
+
   it('keeps apostrophes in generated option labels without breaking TypeScript', () => {
     expect(SERP_ACTION_PROPERTIES).toEqual(
       expect.arrayContaining([

@@ -99,7 +99,27 @@ function addGoogleUuleFromLocation(action: GeneratedSerpAction, params: SerpPara
 }
 
 function isBlank(value: unknown): boolean {
-  return value === null || typeof value === 'undefined' || value === ''
+  return value === null ||
+    typeof value === 'undefined' ||
+    value === '' ||
+    (Array.isArray(value) && value.length === 0)
+}
+
+function normalizeMultiOptionValues(value: unknown): string[] {
+  const values = Array.isArray(value) ? value : [value]
+  return values
+    .map((entry) => String(entry || '').trim())
+    .filter(Boolean)
+}
+
+function serializeMultiOptions(key: string, value: unknown): string {
+  const values = normalizeMultiOptionValues(value)
+  if (key === 'cr') {
+    return values
+      .map((code) => `country${code.replace(/^country/i, '').toUpperCase()}`)
+      .join('|')
+  }
+  return values.join(',')
 }
 
 export function buildGeneratedActionParams(input: GeneratedActionRequestInput): SerpParams {
@@ -126,9 +146,15 @@ export function buildGeneratedActionParams(input: GeneratedActionRequestInput): 
     const value = input.values[parameter.propertyName]
     if (isBlank(value)) continue
 
-    params[parameter.key] = parameter.type === 'boolean'
+    const normalizedValue = parameter.type === 'boolean'
       ? parseBooleanLike(value)
-      : value as string | number | boolean
+      : parameter.type === 'multiOptions'
+        ? serializeMultiOptions(parameter.key, value)
+        : value as string | number | boolean
+
+    if (!isBlank(normalizedValue)) {
+      params[parameter.key] = normalizedValue
+    }
   }
 
   const extra = parseParamsJson(normalizeParamsJsonInput(input.paramsJson))

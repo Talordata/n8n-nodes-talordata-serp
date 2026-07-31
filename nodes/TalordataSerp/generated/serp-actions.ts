@@ -3,7 +3,7 @@ import type { INodeProperties } from 'n8n-workflow'
 export interface GeneratedSerpParameter {
   key: string
   propertyName: string
-  type: 'string' | 'number' | 'boolean' | 'options' | 'json'
+  type: 'string' | 'number' | 'boolean' | 'options' | 'multiOptions' | 'json'
   required: boolean
 }
 
@@ -71,13 +71,13 @@ export const SERP_ACTIONS: GeneratedSerpAction[] = [
       {
         "key": "cr",
         "propertyName": "google_search__cr",
-        "type": "options",
+        "type": "multiOptions",
         "required": false
       },
       {
         "key": "lr",
         "propertyName": "google_search__lr",
-        "type": "options",
+        "type": "multiOptions",
         "required": false
       },
       {
@@ -5288,7 +5288,7 @@ export const SERP_ACTION_PROPERTIES: INodeProperties[] = [
   {
     "displayName": "Country Set",
     "name": "google_search__cr",
-    "type": "options",
+    "type": "multiOptions",
     "required": false,
     "displayOptions": {
       "show": {
@@ -5297,8 +5297,8 @@ export const SERP_ACTION_PROPERTIES: INodeProperties[] = [
         ]
       }
     },
-    "default": "",
-    "description": "Select one Country Set value.",
+    "default": [],
+    "description": "Select zero or more Country Set values.",
     "options": [
       {
         "name": "Afghanistan",
@@ -6281,7 +6281,7 @@ export const SERP_ACTION_PROPERTIES: INodeProperties[] = [
   {
     "displayName": "Language Restriction",
     "name": "google_search__lr",
-    "type": "options",
+    "type": "multiOptions",
     "required": false,
     "displayOptions": {
       "show": {
@@ -6290,8 +6290,8 @@ export const SERP_ACTION_PROPERTIES: INodeProperties[] = [
         ]
       }
     },
-    "default": "",
-    "description": "Select one Language Restriction value.",
+    "default": [],
+    "description": "Select zero or more Language Restriction values.",
     "options": [
       {
         "name": "Afrikaans",
@@ -56893,13 +56893,13 @@ export const SERP_ACTIONS_BY_TOOL_NAME: Record<string, GeneratedSerpAction> = {
       {
         "key": "cr",
         "propertyName": "google_search__cr",
-        "type": "options",
+        "type": "multiOptions",
         "required": false
       },
       {
         "key": "lr",
         "propertyName": "google_search__lr",
-        "type": "options",
+        "type": "multiOptions",
         "required": false
       },
       {

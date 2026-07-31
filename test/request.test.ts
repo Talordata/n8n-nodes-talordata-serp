@@ -168,6 +168,39 @@ describe('request helpers', () => {
     })
   })
 
+  it('serializes Google country and language multi-select values like the dashboard', () => {
+    expect(buildGeneratedActionParams({
+      action: SERP_ACTIONS_BY_TOOL_NAME.google_search,
+      values: {
+        google_search__q: 'coffee',
+        google_search__cr: ['ad', 'dz'],
+        google_search__lr: ['am', 'ar', 'hy']
+      },
+      paramsJson: '{}'
+    })).toMatchObject({
+      engine: 'google',
+      q: 'coffee',
+      cr: 'countryAD|countryDZ',
+      lr: 'am,ar,hy',
+      json: 2
+    })
+  })
+
+  it('omits empty Google country and language multi-select values', () => {
+    const params = buildGeneratedActionParams({
+      action: SERP_ACTIONS_BY_TOOL_NAME.google_search,
+      values: {
+        google_search__q: 'coffee',
+        google_search__cr: [],
+        google_search__lr: []
+      },
+      paramsJson: '{}'
+    })
+
+    expect(params).not.toHaveProperty('cr')
+    expect(params).not.toHaveProperty('lr')
+  })
+
   it('adds Google UULE from location when uule is empty', () => {
     const params = buildGeneratedActionParams({
       action: SERP_ACTIONS_BY_TOOL_NAME.google_search,
