@@ -26,7 +26,7 @@ describe('request helpers', () => {
       hl: 'en',
       num: 10,
       no_cache: false,
-      json: 2
+      json: 1
     })
   })
 
@@ -47,7 +47,7 @@ describe('request helpers', () => {
       mkt: 'en-us',
       count: 10,
       no_cache: true,
-      json: 2
+      json: 1
     })
   })
 
@@ -65,7 +65,7 @@ describe('request helpers', () => {
       gl: 'us',
       hl: 'en',
       num: 5,
-      json: 2
+      json: 1
     })
   })
 
@@ -79,7 +79,7 @@ describe('request helpers', () => {
       q: 'coffee',
       gl: 'us',
       num: 3,
-      json: 2
+      json: 1
     })
   })
 
@@ -131,7 +131,7 @@ describe('request helpers', () => {
     })).toEqual({
       engine: 'google_lens',
       url: 'https://example.com/image.png',
-      json: 2
+      json: 1
     })
   })
 
@@ -147,7 +147,7 @@ describe('request helpers', () => {
       engine: 'yandex',
       text: 'coffee',
       lang: 'en',
-      json: 2
+      json: 1
     })
   })
 
@@ -164,6 +164,20 @@ describe('request helpers', () => {
       q: 'coffee',
       num: 3,
       gl: 'us',
+      json: 1
+    })
+  })
+
+  it('allows paramsJson to override the default JSON response format', () => {
+    expect(buildGeneratedActionParams({
+      action: SERP_ACTIONS_BY_TOOL_NAME.google_search,
+      values: {
+        google_search__q: 'coffee'
+      },
+      paramsJson: '{"json":2}'
+    })).toMatchObject({
+      engine: 'google',
+      q: 'coffee',
       json: 2
     })
   })
@@ -182,7 +196,7 @@ describe('request helpers', () => {
       q: 'coffee',
       cr: 'countryAD|countryDZ',
       lr: 'am,ar,hy',
-      json: 2
+      json: 1
     })
   })
 

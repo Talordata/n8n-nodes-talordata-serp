@@ -1,4 +1,5 @@
 import type { SerpParams } from './request'
+import { parseGoogleSerpContent } from './serp-content-parser'
 
 export interface NormalizeInput {
   params: SerpParams
@@ -51,6 +52,10 @@ export function normalizeSerpResponse(input: NormalizeInput): Record<string, unk
 
   if (taskId) {
     normalized.taskId = taskId
+  }
+
+  if (input.params.engine === 'google') {
+    Object.assign(normalized, parseGoogleSerpContent(input.payload))
   }
 
   return normalized

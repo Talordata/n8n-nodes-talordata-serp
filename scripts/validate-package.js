@@ -36,7 +36,7 @@ const pkg = readJson('package.json')
 
 assert(pkg.name === 'n8n-nodes-talordata-serp', 'package name must be n8n-nodes-talordata-serp')
 assert(/^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$/.test(pkg.version), 'package version must be valid semver')
-assert(pkg.version === '0.1.9', 'unpublished package version must remain 0.1.9')
+assert(pkg.version === '0.1.10', 'unpublished package version must remain 0.1.10')
 assert(pkg.description && /Talordata SERP/i.test(pkg.description), 'package must describe the Talordata SERP node')
 assert(pkg.license === 'MIT', 'package license must be MIT')
 assert(pkg.homepage === 'https://github.com/Talordata/n8n-nodes-talordata-serp#readme', 'package homepage must point to the GitHub README')
@@ -54,7 +54,13 @@ assert(
 assert(Array.isArray(pkg.files) && pkg.files.includes('dist'), 'package files must include dist')
 assert(pkg.files.includes('README.md'), 'package files must include README.md')
 assert(pkg.files.includes('LICENSE'), 'package files must include LICENSE')
-assert(!pkg.dependencies || Object.keys(pkg.dependencies).length === 0, 'package must not add runtime dependencies')
+assert(
+  JSON.stringify(pkg.dependencies) === JSON.stringify({
+    cheerio: '1.0.0',
+    'markdown-it': '^14.1.0'
+  }),
+  'package runtime dependencies must be limited to the approved SERP content parsers'
+)
 assert(!pkg.files.includes('nodes'), 'package files should not publish TypeScript source nodes')
 assert(!pkg.files.includes('credentials'), 'package files should not publish TypeScript source credentials')
 
@@ -72,9 +78,9 @@ const requiredSources = [
   'nodes/TalordataSerp/generated/serp-actions.ts',
   'nodes/TalordataSerp/request.ts',
   'nodes/TalordataSerp/response.ts',
+  'nodes/TalordataSerp/serp-content-parser.ts',
   'nodes/TalordataSerp/icon.png',
   'nodes/TalordataSerp/TalordataSerp.node.json',
-  'scripts/generate-from-dify-serp.js',
   'LICENSE',
   'README.md'
 ]

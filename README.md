@@ -154,7 +154,9 @@ Extra Parameters JSON: {"hl":"en"}
 
 The node automatically uses the correct query field based on the selected action—such as `q`、`text`、`url`、`product_id`、`patent_id`、`author_id` or `trend`。
 
-The Extra Parameters JSONmust be a valid JSON object. This field is merged into the request after the visible form fields. The node controls the `engine` and the default `json=2` value, so extra parameters cannot override the selected search engine.
+The Extra Parameters JSONmust be a valid JSON object. This field is merged into the request after the visible form fields. The node controls the `engine` and uses `json=1` by default. You can override `json` through this field, but extra parameters cannot override the selected search engine.
+
+Starting with version `0.1.10`, Google Search responses retain the provider payload in `raw` and also expose canonical `results`, `parseFormat`, `parseStatus`, and `parseError` fields. The canonical parser supports structured mode 1, embedded JSON mode 2, HTML mode 3, Markdown mode 6, and combined Markdown/HTML mode 7 responses. Provider retrieval failures are returned with `parseStatus: "failed"` and a diagnostic `parseError`.
 
 ### Supported operations
 

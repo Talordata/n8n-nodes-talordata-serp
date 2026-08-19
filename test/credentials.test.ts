@@ -17,5 +17,6 @@ describe('TalordataSerpApi credential', () => {
       Accept: 'application/json',
       Origin: 'n8n'
     })
+    expect(credential.test.request.body).toBe('engine=google&q=coffee&json=1')
   })
 })

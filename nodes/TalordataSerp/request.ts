@@ -61,6 +61,7 @@ const GOOGLE_UULE_ENGINES = new Set([
 ])
 
 const UULE_LENGTH_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_'
+const DEFAULT_JSON_FORMAT = 1
 
 export function parseBooleanLike(value: unknown, defaultValue = false): boolean {
   if (value === null || typeof value === 'undefined' || value === '') return defaultValue
@@ -166,7 +167,7 @@ export function buildGeneratedActionParams(input: GeneratedActionRequestInput): 
   }
 
   if (typeof params.json === 'undefined') {
-    params.json = 2
+    params.json = DEFAULT_JSON_FORMAT
   }
 
   addGoogleUuleFromLocation(input.action, params)
@@ -183,7 +184,7 @@ export function buildWebSearchParams(input: WebSearchInput): SerpParams {
       setlang: input.language,
       count: input.limit,
       no_cache: input.noCache,
-      json: 2
+      json: DEFAULT_JSON_FORMAT
     }
   }
 
@@ -194,7 +195,7 @@ export function buildWebSearchParams(input: WebSearchInput): SerpParams {
       lang: input.language,
       p: 0,
       no_cache: input.noCache,
-      json: 2
+      json: DEFAULT_JSON_FORMAT
     }
   }
 
@@ -205,7 +206,7 @@ export function buildWebSearchParams(input: WebSearchInput): SerpParams {
     hl: input.language,
     num: input.limit,
     no_cache: input.noCache,
-    json: 2
+    json: DEFAULT_JSON_FORMAT
   }
 }
 
@@ -219,7 +220,7 @@ export function buildImageSearchParams(input: ImageSearchInput): SerpParams {
       mkt: input.market,
       count: input.limit,
       no_cache: input.noCache,
-      json: 2
+      json: DEFAULT_JSON_FORMAT
     }
   }
 
@@ -230,7 +231,7 @@ export function buildImageSearchParams(input: ImageSearchInput): SerpParams {
     hl: input.language,
     num: input.limit,
     no_cache: input.noCache,
-    json: 2
+    json: DEFAULT_JSON_FORMAT
   }
 }
 
@@ -243,7 +244,7 @@ export function buildNewsSearchParams(input: NewsSearchInput): SerpParams {
       setlang: input.language,
       count: input.limit,
       no_cache: input.noCache,
-      json: 2
+      json: DEFAULT_JSON_FORMAT
     }
   }
 
@@ -254,7 +255,7 @@ export function buildNewsSearchParams(input: NewsSearchInput): SerpParams {
     hl: input.language,
     num: input.limit,
     no_cache: input.noCache,
-    json: 2
+    json: DEFAULT_JSON_FORMAT
   }
 }
 
@@ -269,7 +270,7 @@ export function buildRawRequestParams(input: RawRequestInput): SerpParams {
   const params: SerpParams = {
     ...extra,
     engine,
-    json: typeof extra.json === 'undefined' ? 2 : extra.json
+    json: typeof extra.json === 'undefined' ? DEFAULT_JSON_FORMAT : extra.json
   }
 
   if (query) {

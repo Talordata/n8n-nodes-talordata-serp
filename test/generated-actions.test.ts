@@ -7,7 +7,7 @@ import {
 import { TalordataSerp } from '../nodes/TalordataSerp/TalordataSerp.node'
 
 describe('generated SERP actions', () => {
-  it('contains every Dify explicit SERP action', () => {
+  it('contains every Talordata SERP action', () => {
     expect(SERP_ACTIONS).toHaveLength(34)
     expect(SERP_ACTION_OPTIONS).toHaveLength(34)
     expect(SERP_ACTIONS.map((action) => action.toolName)).toEqual([
@@ -48,7 +48,7 @@ describe('generated SERP actions', () => {
     ])
   })
 
-  it('preserves non-q query fields from the Dify registry', () => {
+  it('preserves non-q query fields from the action metadata', () => {
     expect(SERP_ACTIONS_BY_TOOL_NAME.google_lens_search.queryField).toBe('url')
     expect(SERP_ACTIONS_BY_TOOL_NAME.yandex_search.queryField).toBe('text')
     expect(SERP_ACTIONS_BY_TOOL_NAME.google_finance_markets_search.queryField).toBe('trend')

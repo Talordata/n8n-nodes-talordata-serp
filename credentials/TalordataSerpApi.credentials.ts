@@ -52,7 +52,7 @@ export class TalordataSerpApi implements ICredentialType {
         Accept: 'application/json',
         Origin: 'n8n'
       },
-      body: 'engine=google&q=coffee&json=2'
+      body: 'engine=google&q=coffee&json=1'
     }
   }
 }
